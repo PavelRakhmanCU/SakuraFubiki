@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
   GlobalContext,
   RESTAURANT_TABLES,
@@ -31,6 +31,7 @@ const ReservationPage = () => {
   const [selectedDateKey, setSelectedDateKey] = useState("");
   const [selectedSlotId, setSelectedSlotId] = useState("");
   const [confirmation, setConfirmation] = useState(null);
+  const confirmationRef = useRef(null);
 
   const monthGroups = useMemo(() => groupDaysByMonth(calendar), [calendar]);
 
@@ -43,6 +44,12 @@ const ReservationPage = () => {
     if (!selectedDay) return [];
     return selectedDay.timeSlots.filter((s) => countAvailableTablesInSlot(s) > 0);
   }, [selectedDay]);
+
+  useEffect(() => {
+    if (confirmation && confirmationRef.current) {
+      confirmationRef.current.focus();
+    }
+  }, [confirmation]);
 
   const handleConfirmReservation = (e) => {
     e.preventDefault();
@@ -243,7 +250,12 @@ const ReservationPage = () => {
       </form>
 
       {confirmation && (
-        <div className="reservation-confirmation" role="status">
+        <div
+          className="reservation-confirmation"
+          role="status"
+          tabIndex={-1}
+          ref={confirmationRef}
+        >
           <h3 className="reservation-confirmation-title">Reservation confirmed</h3>
           <p>Thank you, {confirmation.name}. We have held the following for you:</p>
           <ul className="reservation-confirmation-list">
