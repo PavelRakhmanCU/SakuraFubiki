@@ -30,6 +30,7 @@ body::before{
   background-size: cover;
   background-position: center;
   opacity: 0.1;
+  pointer-events: none;
 
 }
 
@@ -186,6 +187,7 @@ body::before{
   background-position: center;
   background-size: cover;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+  pointer-events: none;
   
 }
 
@@ -234,6 +236,8 @@ justify-content: center ;
   top: 50%;
   left: calc(50% - 10rem);
   display: flex;
+  z-index: 2;
+  pointer-events: auto;
 }
 
 .cta button

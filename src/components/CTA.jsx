@@ -1,9 +1,15 @@
+import { useNavigate } from "react-router-dom";
 
+const CTA = () => {
+  const navigate = useNavigate();
 
-const CTA = ()=>{
-    return(
-        <div className="cta"><button>Make a Reservation</button></div>
-    )
-}
+  return (
+    <div className="cta">
+      <button type="button" onClick={() => navigate("/reserve")}>
+        Make a Reservation
+      </button>
+    </div>
+  );
+};
 
 export default CTA
