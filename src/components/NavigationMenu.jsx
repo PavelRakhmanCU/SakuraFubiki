@@ -14,6 +14,7 @@ const NavigationMenu = () => {
         aria-hidden="true"
       />
       <nav
+        id="main-navigation"
         className={`navigation-menu ${isActive ? "active" : ""}`}
         onClick={(e) => e.stopPropagation()}
         aria-label="Main navigation"
