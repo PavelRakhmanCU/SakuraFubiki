@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { GlobalContext } from "../context/GlobalContext";
-import { IoMenuOutline } from "react-icons/io5";
+import { IoMenu } from "react-icons/io5";
 
 const ToggleSwitch = () => {
   const { isActive, setIsActive } = useContext(GlobalContext);
@@ -14,7 +14,7 @@ const ToggleSwitch = () => {
       aria-controls="main-navigation"
       aria-label={isActive ? "Close menu" : "Open menu"}
     >
-      <IoMenuOutline aria-hidden />
+      <IoMenu aria-hidden />
     </button>
   );
 };
