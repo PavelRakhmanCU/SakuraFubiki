@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const splitParagraphs = (text) =>
   text
@@ -6,22 +6,55 @@ const splitParagraphs = (text) =>
     .map((p) => p.trim().replace(/\s+/g, " "))
     .filter(Boolean);
 
+const CLOUD = "https://res.cloudinary.com/dicvjx88i/image/upload";
+
+/** Delivery URLs (res.cloudinary.com). Console/thumbnail URLs are not reliable in <img>. */
 const illustrationUrls = [
   {
-    imageURL:
-      "https://res-console.cloudinary.com/dicvjx88i/thumbnails/v1/image/upload/v1775320475/U2FrdXJhRnVidWtpX1Rva3lvX3pkYTFkZw==/drilldown",
     altText: "Sakura Fubuki illustration",
+    urls: [
+      `${CLOUD}/v1775320475/SakuraFubuki_Tokyo_zda1dg.jpg`,
+      `${CLOUD}/v1775320475/SakuraFubuki_Tokyo_zda1dg.png`,
+    ],
   },
   {
-    imageURL:
-      "https://res-console.cloudinary.com/dicvjx88i/thumbnails/v1/image/upload/v1775320475/S2VuamlfYW5kX1l1aV9teHZ6emk=/drilldown",
     altText:
       "Kenji and Yui back to back against the backdrop showing contrast between Minneapolis and Tokyo",
+    urls: [
+      `${CLOUD}/v1775320475/Kenji_and_Yui_mxvzzi.jpg`,
+      `${CLOUD}/v1775320475/Kenji_and_Yui_mxvzzi.png`,
+    ],
   },
 ];
 
 const sakuraIllustration = illustrationUrls[0];
 const kenjiAndYuiIllustration = illustrationUrls[1];
+
+const AboutIllustrationImg = ({ urls, alt, className }) => {
+  const [index, setIndex] = useState(0);
+  const exhausted = index >= urls.length;
+
+  if (exhausted) {
+    return (
+      <div
+        className={`${className} about-section__img--placeholder`}
+        role="img"
+        aria-label={alt}
+      />
+    );
+  }
+
+  return (
+    <img
+      className={className}
+      src={urls[index]}
+      alt={alt}
+      loading="lazy"
+      decoding="async"
+      onError={() => setIndex((i) => i + 1)}
+    />
+  );
+};
 
 const sections = [
   {
@@ -72,12 +105,10 @@ const AboutUs = () => {
           >
             {hasImage && (
               <figure className="about-section__figure">
-                <img
+                <AboutIllustrationImg
                   className="about-section__img"
-                  src={section.image.imageURL}
+                  urls={section.image.urls}
                   alt={section.image.altText}
-                  loading="lazy"
-                  decoding="async"
                 />
               </figure>
             )}
